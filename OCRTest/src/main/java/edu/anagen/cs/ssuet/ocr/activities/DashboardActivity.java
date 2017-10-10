@@ -3,7 +3,8 @@ package edu.anagen.cs.ssuet.ocr.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import edu.sfsu.cs.orange.ocr.R;
+import edu.anagen.cs.ssuet.ocr.R;
+
 
 public class DashboardActivity extends AppCompatActivity {
 
