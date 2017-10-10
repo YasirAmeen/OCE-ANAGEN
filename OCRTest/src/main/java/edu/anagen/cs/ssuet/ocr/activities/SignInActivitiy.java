@@ -88,14 +88,12 @@ public class SignInActivitiy extends AppCompatActivity {
         RealmQuery<User> query = realm.where(User.class);
         User queryResult = query.equalTo("email",email).equalTo("password",password).findFirst();
         if(queryResult != null) {
-            LoaderClass task = new LoaderClass();
+            SuccessTask task = new SuccessTask();
             task.execute();
-            Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show();
 
         }else {
-            LoaderClass task = new LoaderClass();
+            FailureTask task = new FailureTask();
             task.execute();
-            Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -104,7 +102,7 @@ public class SignInActivitiy extends AppCompatActivity {
     }
 
 
-    private class LoaderClass extends AsyncTask<Void,Void,Void> {
+    private class SuccessTask extends AsyncTask<Void,Void,Void> {
 
         ProgressDialog pd;
         @Override
@@ -136,6 +134,45 @@ public class SignInActivitiy extends AppCompatActivity {
             super.onPostExecute(aVoid);
 
             pd.dismiss();
+            Toast.makeText(SignInActivitiy.this, "Login Success", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(SignInActivitiy.this,OCRResultActivity.class));
+
+        }
+    }
+
+    private class FailureTask extends AsyncTask<Void,Void,Void> {
+
+        ProgressDialog pd;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pd = Utils.MorseProgressDialog(SignInActivitiy.this,null,"Verifying Account...");
+            pd.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+
+            for(int i = 0; i < 3; i++) {
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            pd.dismiss();
+            Toast.makeText(SignInActivitiy.this, "Login Failed", Toast.LENGTH_SHORT).show();
 
         }
     }
