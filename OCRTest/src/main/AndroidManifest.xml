@@ -52,7 +52,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".HelpActivity"
             android:screenOrientation="user">
@@ -65,9 +65,7 @@
         <activity android:name=".PreferencesActivity" />
         <activity
             android:name=".activities.OCRResultActivity"
-            android:theme="@style/Theme.AppCompat.Light">
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light"></activity>
         <activity
             android:name=".activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -96,7 +94,15 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".activities.DashboardActivity"></activity>
+        <activity android:name=".activities.DashboardActivity" />
+        <activity android:name=".activities.QuestionsListActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+
+            >
+
+
+
+        </activity>
     </application>
 
 </manifest>

@@ -37,20 +37,6 @@
 
                 </RelativeLayout>
 
-                <EditText
-
-
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:textColor="#000"
-                    android:singleLine="true"
-
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:id="@+id/et_name_exam"
-                    android:backgroundTint="@android:color/transparent"
-                    android:hint="Enter Subject Name" />
 
 
                 <EditText

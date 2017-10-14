@@ -10,7 +10,9 @@ public class Paper extends RealmObject {
 
 
     private int id;
+/*
     private String name;
+*/
     private String text;
     private int complexity;
     private float weightage;
@@ -30,7 +32,7 @@ public class Paper extends RealmObject {
         this.id = id;
     }
 
-    public String getName() {
+    /*public String getName() {
         return name;
     }
 
@@ -38,7 +40,7 @@ public class Paper extends RealmObject {
         this.name = name;
     }
 
-    public String getText() {
+*/    public String getText() {
         return text;
     }
 

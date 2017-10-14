@@ -44,8 +44,8 @@ public class OCRResultActivity extends ActionBarActivity {
        _ocr_result_text = (EditText) findViewById(R.id.ocr_result_text);
 
         Intent intent = getIntent();
-       // String resultsText = intent.getStringExtra("ocrText");
-         resultsText = "This is some text for testing purpose....";
+       String resultsText = intent.getStringExtra("ocrText");
+       //  resultsText = "This is some text for testing purpose....";
         _ocr_result_text.setText(resultsText);
         _ocr_result_text.setEnabled(false);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -74,7 +74,7 @@ public class OCRResultActivity extends ActionBarActivity {
                 View dialog_layout = inflater.inflate(R.layout.ocr_result_dialog,null);
                 final EditText _et_com = (EditText) dialog_layout.findViewById(R.id.et_com);
                 final EditText _et_wage = (EditText) dialog_layout.findViewById(R.id.et_wage);
-                final EditText _et_name = (EditText) dialog_layout.findViewById(R.id.et_name_exam);
+               // final EditText _et_name = (EditText) dialog_layout.findViewById(R.id.et_name_exam);
                 final TextView _btn_done = dialog_layout.findViewById(R.id.tv_done);
                 final TextView _btn_cancel = dialog_layout.findViewById(R.id.tv_cancel);
                 builder.setView(dialog_layout);
@@ -94,11 +94,10 @@ public class OCRResultActivity extends ActionBarActivity {
 
                             Toast.makeText(OCRResultActivity.this, "Weightage is required..", Toast.LENGTH_SHORT).show();
                             return;
-                        }else if(_et_name.getText().toString().isEmpty()) {
-
+                        }/*else if(_et_name.getText().toString().isEmpty()) {
                             Toast.makeText(OCRResultActivity.this, "Name is required..", Toast.LENGTH_SHORT).show();
                             return;
-                        }else {
+                        }*/else {
 
                             int id = -1;
                             RealmResults<Paper> results = realm.where(Paper.class).findAll();
@@ -111,12 +110,13 @@ public class OCRResultActivity extends ActionBarActivity {
                                 id= results.max("id").intValue() + 1;
 
                             }
+                          // String editedText = _ocr_result_text.getText().toString().trim().replaceAll("\\s{2,}", " ")
                             realm.beginTransaction();
                             Paper paper = realm.createObject(Paper.class);
                             paper.setId(id);
                             paper.setComplexity(Integer.parseInt(_et_com.getText().toString()));
                             paper.setWeightage(Float.parseFloat(_et_wage.getText().toString()));
-                            paper.setName(_et_name.getText().toString());
+                           // paper.setName(_et_name.getText().toString());
                             paper.setText(_ocr_result_text.getText().toString());
                             realm.commitTransaction();
 
