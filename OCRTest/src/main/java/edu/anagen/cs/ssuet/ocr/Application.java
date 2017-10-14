@@ -1,5 +1,9 @@
 package edu.anagen.cs.ssuet.ocr;
 
+import android.content.ContextWrapper;
+
+import com.pixplicity.easyprefs.library.Prefs;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -20,5 +24,12 @@ public class Application extends android.app.Application {
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
+
+        new Prefs.Builder()
+                .setContext(this)
+                .setMode(ContextWrapper.MODE_PRIVATE)
+                .setPrefsName(getPackageName())
+                .setUseDefaultSharedPreference(true)
+                .build();
     }
 }

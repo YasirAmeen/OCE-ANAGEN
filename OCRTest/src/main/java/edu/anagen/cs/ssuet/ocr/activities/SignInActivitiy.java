@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.pixplicity.easyprefs.library.Prefs;
+
 import edu.anagen.cs.ssuet.ocr.CaptureActivity;
 import edu.anagen.cs.ssuet.ocr.R;
 import edu.anagen.cs.ssuet.ocr.Utils;
@@ -42,12 +44,21 @@ public class SignInActivitiy extends AppCompatActivity {
 
     private void setupComponents() {
 
+
+
         realm = Realm.getDefaultInstance();
         _btn_register = (Button) findViewById(R.id.btn_register);
         _btn_signin = (Button) findViewById(R.id.btn_signin);
         _et_email_s = (EditText) findViewById(R.id.et_email_s);
         _et_password_s = (EditText) findViewById(R.id.et_password_s);
 
+
+        if(Prefs.getBoolean("loginSuccess",false)) {
+
+            startActivity(new Intent(SignInActivitiy.this,CaptureActivity.class));
+            finish();
+
+        }
 
     }
 
@@ -133,9 +144,13 @@ public class SignInActivitiy extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
+
+            Prefs.putBoolean("loginSuccess",true);
+
             pd.dismiss();
             Toast.makeText(SignInActivitiy.this, "Login Success", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(SignInActivitiy.this,OCRResultActivity.class));
+            startActivity(new Intent(SignInActivitiy.this,CaptureActivity.class));
+            finish();
 
         }
     }
@@ -177,4 +192,8 @@ public class SignInActivitiy extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }
