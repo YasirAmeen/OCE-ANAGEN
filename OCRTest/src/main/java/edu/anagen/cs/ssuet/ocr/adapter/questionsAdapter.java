@@ -1,17 +1,24 @@
 package edu.anagen.cs.ssuet.ocr.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.pixplicity.easyprefs.library.Prefs;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.anagen.cs.ssuet.ocr.R;
+import edu.anagen.cs.ssuet.ocr.activities.SplashActivity;
 import edu.anagen.cs.ssuet.ocr.model.Paper;
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -86,6 +93,8 @@ public class questionsAdapter extends BaseAdapter {
 
         return convertview;
     }
+
+
 
     public class ViewHolder {
 

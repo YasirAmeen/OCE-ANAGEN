@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
+
     android:layout_height="match_parent"
     tools:context="edu.anagen.cs.ssuet.ocr.activities.QuestionsListActivity">
 
@@ -11,34 +12,90 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
+
         android:background="#03A9F4"
         >
 
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_marginLeft="16dp"
-            android:layout_height="match_parent"
-            android:id="@+id/imageView"
-            android:src="@drawable/back_arrow"
-            />
+<ImageView
+    android:layout_width="55dp"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:layout_marginLeft="5dp"
+    android:src="@drawable/anagenlogo"
+    android:id="@+id/imageView2" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Saved Questions"
-            android:layout_marginLeft="16dp"
+            android:text="ANAGEN"
             android:textSize="18sp"
             android:gravity="center"
             android:textColor="#fff"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/imageView"
-            android:layout_toEndOf="@+id/imageView" />
+            android:layout_toRightOf="@+id/imageView2"
+            android:layout_toEndOf="@+id/imageView2" />
+
+        <ImageView
+            android:id="@+id/popmenu"
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/over_flow_menu"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
-    <ListView
 
-        android:id="@+id/questionsListView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent">
+
+<LinearLayout
+    android:id="@+id/no_question_view"
+    android:visibility="visible"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="140dp"
+        android:src="@drawable/empty_mailbox"
+    />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="16sp"
+        android:text="Looks like you don't have any question right now."/>
+
+</LinearLayout>
+
+        <ListView
+
+            android:id="@+id/questionsListView"
+            android:layout_width="match_parent"
+            android:dividerHeight="5dp"
+            android:layout_margin="5dp"
+            android:visibility="invisible"
+            android:divider="@android:color/transparent"
+            android:layout_height="match_parent"></ListView>
+
+
+        <ImageView
+            android:id="@+id/scan_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/fab_new_cam"
+            android:layout_marginBottom="12dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
 </LinearLayout>

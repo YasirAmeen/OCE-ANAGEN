@@ -55,7 +55,7 @@ public class SignInActivitiy extends AppCompatActivity {
 
         if(Prefs.getBoolean("loginSuccess",false)) {
 
-            startActivity(new Intent(SignInActivitiy.this,CaptureActivity.class));
+            startActivity(new Intent(SignInActivitiy.this,QuestionsListActivity.class));
             finish();
 
         }
@@ -149,7 +149,7 @@ public class SignInActivitiy extends AppCompatActivity {
 
             pd.dismiss();
             Toast.makeText(SignInActivitiy.this, "Login Success", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(SignInActivitiy.this,CaptureActivity.class));
+            startActivity(new Intent(SignInActivitiy.this,QuestionsListActivity.class));
             finish();
 
         }

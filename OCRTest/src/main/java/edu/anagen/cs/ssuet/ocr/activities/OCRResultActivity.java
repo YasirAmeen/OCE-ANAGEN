@@ -28,6 +28,8 @@ public class OCRResultActivity extends ActionBarActivity {
     private Button btn_save;
     private String resultsText;
     private Realm realm;
+    private boolean fromQuestionList;
+    private int _id;
 
 
     @Override
@@ -43,11 +45,22 @@ public class OCRResultActivity extends ActionBarActivity {
         getSupportActionBar().hide();
        _ocr_result_text = (EditText) findViewById(R.id.ocr_result_text);
 
-        Intent intent = getIntent();
-       String resultsText = intent.getStringExtra("ocrText");
-       //  resultsText = "This is some text for testing purpose....";
-        _ocr_result_text.setText(resultsText);
-        _ocr_result_text.setEnabled(false);
+        final Intent intent = getIntent();
+        fromQuestionList = intent.getBooleanExtra("comingFromQuestionList",false);
+        if(fromQuestionList) {
+            resultsText = intent.getStringExtra("_text");
+            _id = intent.getIntExtra("_id",0);
+            _ocr_result_text.setText(resultsText);
+            _ocr_result_text.setEnabled(false);
+            btn_save.setText("Update");
+        }else {
+            String resultsText = intent.getStringExtra("ocrText");
+           /* resultsText = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,3" +
+                    "";*/
+
+            _ocr_result_text.setText(resultsText.trim().replaceAll(" +", " "));
+            _ocr_result_text.setEnabled(false);
+        }
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 
@@ -68,6 +81,12 @@ public class OCRResultActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
+                /*if(!_ocr_result_text.isEnabled()) {
+
+                    Toast.makeText(OCRResultActivity.this, "Please enable text editing first..", Toast.LENGTH_SHORT).show();
+                    return;
+                }*/
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(OCRResultActivity.this);
                 LayoutInflater inflater = getLayoutInflater();
 
@@ -86,44 +105,85 @@ public class OCRResultActivity extends ActionBarActivity {
                     public void onClick(View view) {
 
 
-                        if(_et_com.getText().toString().isEmpty()) {
+                        if(btn_save.getText().toString().equals("Update")) {
 
-                            Toast.makeText(OCRResultActivity.this, "Complexity is required..", Toast.LENGTH_SHORT).show();
-                            return;
-                        }else if(_et_wage.getText().toString().isEmpty()) {
 
-                            Toast.makeText(OCRResultActivity.this, "Weightage is required..", Toast.LENGTH_SHORT).show();
-                            return;
-                        }/*else if(_et_name.getText().toString().isEmpty()) {
+                            if(_et_com.getText().toString().isEmpty()) {
+
+                                Toast.makeText(OCRResultActivity.this, "Complexity is required..", Toast.LENGTH_SHORT).show();
+                                return;
+                            }else if(_et_wage.getText().toString().isEmpty()) {
+
+                                Toast.makeText(OCRResultActivity.this, "Weightage is required..", Toast.LENGTH_SHORT).show();
+                                return;
+                            }/*else if(_et_name.getText().toString().isEmpty()) {
                             Toast.makeText(OCRResultActivity.this, "Name is required..", Toast.LENGTH_SHORT).show();
                             return;
                         }*/else {
 
-                            int id = -1;
-                            RealmResults<Paper> results = realm.where(Paper.class).findAll();
-                            if(results.size()  == 0) {
 
-                                id = 1;
+                                RealmResults<Paper> papers = realm.where(Paper.class).findAll();
+                                Paper singlePaper = papers.where().equalTo("id",_id).findFirst();
 
-                            } else {
+                                // String editedText = _ocr_result_text.getText().toString().trim().replaceAll("\\s{2,}", " ")
+                                realm.beginTransaction();
+                                singlePaper.setComplexity(Integer.parseInt(_et_com.getText().toString()));
+                                singlePaper.setWeightage(Float.parseFloat(_et_wage.getText().toString()));
+                                // paper.setName(_et_name.getText().toString());
+                                singlePaper.setText(_ocr_result_text.getText().toString());
+                                realm.commitTransaction();
 
-                                id= results.max("id").intValue() + 1;
+                                Toast.makeText(OCRResultActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                                finish();
 
                             }
-                          // String editedText = _ocr_result_text.getText().toString().trim().replaceAll("\\s{2,}", " ")
-                            realm.beginTransaction();
-                            Paper paper = realm.createObject(Paper.class);
-                            paper.setId(id);
-                            paper.setComplexity(Integer.parseInt(_et_com.getText().toString()));
-                            paper.setWeightage(Float.parseFloat(_et_wage.getText().toString()));
-                           // paper.setName(_et_name.getText().toString());
-                            paper.setText(_ocr_result_text.getText().toString());
-                            realm.commitTransaction();
+                        }else {
+                            if(_et_com.getText().toString().isEmpty()) {
 
-                            Toast.makeText(OCRResultActivity.this, "Saved Successfully", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
+                                Toast.makeText(OCRResultActivity.this, "Complexity is required..", Toast.LENGTH_SHORT).show();
+                                return;
+                            }else if(_et_wage.getText().toString().isEmpty()) {
 
+                                Toast.makeText(OCRResultActivity.this, "Weightage is required..", Toast.LENGTH_SHORT).show();
+                                return;
+                            }/*else if(_et_name.getText().toString().isEmpty()) {
+                            Toast.makeText(OCRResultActivity.this, "Name is required..", Toast.LENGTH_SHORT).show();
+                            return;
+                        }*/else {
+
+                                int id = -1;
+                                RealmResults<Paper> results = realm.where(Paper.class).findAll();
+                                if(results.size()  == 0) {
+
+                                    id = 1;
+
+                                } else {
+
+                                    id= results.max("id").intValue() + 1;
+
+                                }
+                                // String editedText = _ocr_result_text.getText().toString().trim().replaceAll("\\s{2,}", " ")
+                                realm.beginTransaction();
+                                Paper paper = realm.createObject(Paper.class);
+                                paper.setId(id);
+                                paper.setComplexity(Integer.parseInt(_et_com.getText().toString()));
+                                paper.setWeightage(Float.parseFloat(_et_wage.getText().toString()));
+                                // paper.setName(_et_name.getText().toString());
+                                paper.setText(_ocr_result_text.getText().toString());
+                                realm.commitTransaction();
+
+                                Toast.makeText(OCRResultActivity.this, "Saved Successfully", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                                finish();
+                               Intent intent1 = new Intent(OCRResultActivity.this,QuestionsListActivity.class);
+                               startActivity(intent1);
+
+
+                            }
                         }
+
+
                     }
                 });
 
